@@ -21,7 +21,7 @@ try:
 except:
     pass # torchani is required for ANI2x and ANI2xt
 
-from .model_registry import get_model_path
+from aimnet.calculators.model_registry import get_model_path
 
 
 torch.backends.cuda.matmul.allow_tf32 = False

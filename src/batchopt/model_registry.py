@@ -1,14 +1,10 @@
 # https://github.com/isayevlab/aimnetcentral/blob/main/aimnet/calculators/model_registry.py
 
 import os
-import logging
 from typing import Dict, Optional
 
-import click
 import requests
 import yaml
-
-logging.basicConfig(level=logging.INFO)
 
 
 def load_model_registry(registry_file: Optional[str] = None) -> Dict[str, str]:
@@ -50,13 +46,3 @@ def get_model_path(s: str) -> str:
     else:
         s = get_registry_model_path(s)
     return s
-
-
-@click.command(short_help="Clear assets directory.")
-def clear_assets():
-    from glob import glob
-
-    for fil in glob(os.path.join(os.path.dirname(__file__), "assets", "*")):
-        if os.path.isfile(fil):
-            logging.warn(f"Removing {fil}")
-            os.remove(fil)
