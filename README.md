@@ -46,7 +46,6 @@ mol = mol.drop_confs(similar=True, similar_rmsd=0.3)
 mol = mol.sort_confs().rename()
 mol = mol.align_confs().cluster_confs(sort='energy')
 
-print(f'Number of unique conformers: {mol.num_confs}')
 serialized = mol.serialize()
 
 m = rdworks.Mol().deserialize(serialized)
