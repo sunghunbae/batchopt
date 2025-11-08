@@ -521,3 +521,12 @@ class BatchOptimizer(object):
         print(f"(BatchOpt) completed {len(self.mols)} structures in {t1 - t0:.1f} s", flush=True)
         
         return self
+
+
+class BatchSinglePoint(BatchOptimizer):
+    def __init__(self, 
+                 mols: list[Chem.Mol], 
+                 model: str = 'aimnet2', 
+                 batchsize_atoms: int = 16 * 1024,
+                 device: str | None=None):
+        super.__init__(mols, model, batchsize_atoms, max_steps=1, device=device)

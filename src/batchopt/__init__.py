@@ -1,3 +1,3 @@
-__version__='2.3.2'
+__version__='2.3.3'
 
-from .batchopt import BatchOptimizer
+from .batchopt import BatchOptimizer, BatchSinglePoint

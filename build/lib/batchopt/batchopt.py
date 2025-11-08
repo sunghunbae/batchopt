@@ -21,7 +21,7 @@ try:
 except:
     pass # torchani is required for ANI2x and ANI2xt
 
-from .model_registry import get_model_path
+from aimnet.calculators.model_registry import get_model_path
 
 
 torch.backends.cuda.matmul.allow_tf32 = False
@@ -213,7 +213,7 @@ def print_status(state, patience):
     num_dropped = torch.sum(oscillating_count)
     num_converged = num_converged_dropped - num_dropped
     num_active = num_total - num_converged_dropped
-    print(f"BatchOpt> total {num_total} converged {num_converged} dropped {num_dropped} active {num_active}", flush=True)
+    print(f"(BatchOpt) total {num_total} converged {num_converged} dropped {num_dropped} active {num_active}", flush=True)
 
 
 def n_steps(state, n, tolerance, patience):
@@ -300,9 +300,9 @@ def n_steps(state, n, tolerance, patience):
             print_status(state, patience)
     
     if istep == (n):
-        print(f"BatchOpt> reaching maximum optimization step {n}", flush=True)
+        print(f"(BatchOpt) reached maximum optimization step {n}", flush=True)
     else:
-        print(f"BatchOpt> optimization finished at step {istep}", flush=True)
+        print(f"(BatchOpt) finished at step {istep}", flush=True)
     print_status(state, patience)
 
 
@@ -408,7 +408,7 @@ def mols2lists(mols, model):
     return coord, numbers, charges
 
 
-class BatchOptimize(object):
+class BatchOptimizer(object):
     def __init__(self, 
                  mols: list[Chem.Mol], 
                  model: str = 'aimnet2', 
@@ -483,7 +483,7 @@ class BatchOptimize(object):
 
 
     def run(self):
-        print(f"BatchOpt> preparing for {len(self.mols)} structures... ", flush=True)
+        print(f"(BatchOpt) preparing for {len(self.mols)} structures... ", flush=True)
         t0 = perf_counter()
         for p in self.model.parameters():
             p.requires_grad_(False)
@@ -518,6 +518,15 @@ class BatchOptimize(object):
                 mol.GetConformer().SetAtomPosition(atom.GetIdx(), coord[i])
 
         t1 = perf_counter()
-        print(f"BatchOpt> completed {len(self.mols)} structures in {t1 - t0:.1f} s", flush=True)
+        print(f"(BatchOpt) completed {len(self.mols)} structures in {t1 - t0:.1f} s", flush=True)
         
         return self
+
+
+class BatchSinglePoint(BatchOptimizer):
+    def __init__(self, 
+                 mols: list[Chem.Mol], 
+                 model: str = 'aimnet2', 
+                 batchsize_atoms: int = 16 * 1024,
+                 device: str | None=None):
+        super.__init__(mols, model, batchsize_atoms, max_steps=1, device=device)

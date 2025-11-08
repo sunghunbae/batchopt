@@ -5,7 +5,6 @@ src/batchopt/ANI2xt_no_rep.py
 src/batchopt/ANI2xt_rep.py
 src/batchopt/__init__.py
 src/batchopt/batchopt.py
-src/batchopt/model_registry.py
 src/batchopt.egg-info/PKG-INFO
 src/batchopt.egg-info/SOURCES.txt
 src/batchopt.egg-info/dependency_links.txt
