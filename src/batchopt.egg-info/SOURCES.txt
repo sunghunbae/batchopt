@@ -10,3 +10,4 @@ src/batchopt.egg-info/SOURCES.txt
 src/batchopt.egg-info/dependency_links.txt
 src/batchopt.egg-info/requires.txt
 src/batchopt.egg-info/top_level.txt
+tests/test.py

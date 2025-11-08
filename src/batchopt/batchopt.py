@@ -296,9 +296,12 @@ def n_steps(state, n, tolerance, patience):
         state["oscilating_count"][
             not_converged] = oscilating_count  # update counts for continuous no reduction in fmax
 
-        if (istep % (n // 10)) == 0:
-            print_status(state, patience)
-    
+        try:
+            if n > 10 and (istep % (n // 10)) == 0:
+                print_status(state, patience)
+        except ZeroDivisionError:
+            pass
+
     if istep == (n):
         print(f"(BatchOpt) reached maximum optimization step {n}", flush=True)
     else:
@@ -528,5 +531,5 @@ class BatchSinglePoint(BatchOptimizer):
                  mols: list[Chem.Mol], 
                  model: str = 'aimnet2', 
                  batchsize_atoms: int = 16 * 1024,
-                 device: str | None=None):
-        super.__init__(mols, model, batchsize_atoms, max_steps=1, device=device)
+                 device: str | None = None):
+        super().__init__(mols, model, batchsize_atoms, max_steps=1, device=device)
