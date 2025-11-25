@@ -526,7 +526,7 @@ class BatchOptimizer(object):
         return self
 
 
-class BatchSinglePoint(BatchOptimizer):
+class BatchSinglePointer(BatchOptimizer):
     def __init__(self, 
                  mols: list[Chem.Mol], 
                  model: str = 'aimnet2', 

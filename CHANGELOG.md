@@ -2,7 +2,7 @@
 
 ## 2.3.3 (Nov 8, 2025)
 
-added `BatchSinglePoint` class
+added `BatchSinglePointer` class
 
 ## 2.3.2 (Oct 10, 2025)
 
